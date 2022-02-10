@@ -17,149 +17,151 @@ class _MapScreenState extends State<MapScreen> {
 
     return Scaffold(
       body: SafeArea(
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Background(espec: "purple", height: double.infinity),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  SizedBox(
-                      height: 20
-                  ),
-                  Text(
-                    "Seleccione el nodo más cercano a usted",
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.white
+        child: SingleChildScrollView(
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Background(espec: "purple", height: screenHeight),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    SizedBox(
+                        height: 20
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                      height: 10
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Container(
-                      height: screenHeight/1.4,
-                      width: screenWidth/1.1,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(
-                                "assets/images/nuevoMapa.png",
-                              ),
-                              fit: BoxFit.fill
-                          ),
-                          borderRadius: BorderRadius.circular(10)
+                    Text(
+                      "Seleccione el nodo más cercano a usted",
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.white
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                        height: 10
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Container(
+                        height: screenHeight/1.4,
+                        width: screenWidth/1.1,
+                        decoration: BoxDecoration(
+                            image: const DecorationImage(
+                                image: AssetImage(
+                                  "assets/images/map.png",
+                                ),
+                                fit: BoxFit.fill
+                            ),
+                            borderRadius: BorderRadius.circular(10)
+                        ),
                       ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      FloatingActionButton(
-                        onPressed: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const EvacuationRouteScreen(nodoSeleccionado: "A")),
-                          );
-                        },
-                        tooltip: 'nodo A',
-                        child: Text(
-                          "A",
-                          style: TextStyle(
-                            fontSize: 40
-                          ),
-                        ),
-                        heroTag: "A",
-                      ),
-                      FloatingActionButton(
-                        onPressed: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const EvacuationRouteScreen(nodoSeleccionado: "B")),
-                          );
-                        },
-                        tooltip: 'nodo B',
-                        child: Text(
-                          "B",
-                          style: TextStyle(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        FloatingActionButton(
+                          onPressed: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const EvacuationRouteScreen(nodoSeleccionado: "A")),
+                            );
+                          },
+                          tooltip: 'nodo A',
+                          child: Text(
+                            "A",
+                            style: TextStyle(
                               fontSize: 40
+                            ),
                           ),
+                          heroTag: "A",
                         ),
-                        heroTag: "B",
-                      ),
-                      FloatingActionButton(
-                        onPressed: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const EvacuationRouteScreen(nodoSeleccionado: "C")),
-                          );
-                        },
-                        tooltip: 'nodo C',
-                        child: Text(
-                          "C",
-                          style: TextStyle(
-                              fontSize: 40
+                        FloatingActionButton(
+                          onPressed: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const EvacuationRouteScreen(nodoSeleccionado: "B")),
+                            );
+                          },
+                          tooltip: 'nodo B',
+                          child: Text(
+                            "B",
+                            style: TextStyle(
+                                fontSize: 40
+                            ),
                           ),
+                          heroTag: "B",
                         ),
-                        heroTag: "C",
-                      ),
-                      FloatingActionButton(
-                        onPressed: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const EvacuationRouteScreen(nodoSeleccionado: "D")),
-                          );
-                        },
-                        tooltip: 'nodo D',
-                        child: Text(
-                          "D",
-                          style: TextStyle(
-                              fontSize: 40
+                        FloatingActionButton(
+                          onPressed: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const EvacuationRouteScreen(nodoSeleccionado: "C")),
+                            );
+                          },
+                          tooltip: 'nodo C',
+                          child: Text(
+                            "C",
+                            style: TextStyle(
+                                fontSize: 40
+                            ),
                           ),
+                          heroTag: "C",
                         ),
-                        heroTag: "D",
-                      ),
-                      FloatingActionButton(
-                        onPressed: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const EvacuationRouteScreen(nodoSeleccionado: "E")),
-                          );
-                        },
-                        tooltip: 'nodo E',
-                        child: Text(
-                          "E",
-                          style: TextStyle(
-                              fontSize: 40
+                        FloatingActionButton(
+                          onPressed: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const EvacuationRouteScreen(nodoSeleccionado: "D")),
+                            );
+                          },
+                          tooltip: 'nodo D',
+                          child: Text(
+                            "D",
+                            style: TextStyle(
+                                fontSize: 40
+                            ),
                           ),
+                          heroTag: "D",
                         ),
-                        heroTag: "E",
-                      ),
-                      FloatingActionButton(
-                        onPressed: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const EvacuationRouteScreen(nodoSeleccionado: "F")),
-                          );
-                        },
-                        tooltip: 'nodo F',
-                        child: Text(
-                          "F",
-                          style: TextStyle(
-                              fontSize: 40
+                        FloatingActionButton(
+                          onPressed: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const EvacuationRouteScreen(nodoSeleccionado: "E")),
+                            );
+                          },
+                          tooltip: 'nodo E',
+                          child: Text(
+                            "E",
+                            style: TextStyle(
+                                fontSize: 40
+                            ),
                           ),
+                          heroTag: "E",
                         ),
-                        heroTag: "F",
-                      ),
-                    ],
-                  ),
-                ],
+                        FloatingActionButton(
+                          onPressed: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const EvacuationRouteScreen(nodoSeleccionado: "F")),
+                            );
+                          },
+                          tooltip: 'nodo F',
+                          child: Text(
+                            "F",
+                            style: TextStyle(
+                                fontSize: 40
+                            ),
+                          ),
+                          heroTag: "F",
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

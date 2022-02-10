@@ -11,14 +11,16 @@ class EvacuationRouteScreen extends StatefulWidget {
 }
 
 class _EvacuationRouteScreenState extends State<EvacuationRouteScreen> {
-  final Map graph = {
-    1: {2:100,3:200,4:300,5:250,6:350,10:10,20:20,30:30,40:40,50:60,60:70,70:80},
-    2: {1:100,3:100,4:200,5:150,6:250,10:10,20:10,30:20,40:30,50:40,60:60,70:70},
-    3: {2:100,1:200,4:100,5:50,6:150,10:20,10:15,30:10,40:15,50:30,60:40,70:50},
-    4: {2:200,3:100,1:300,5:200,6:200,10:70,20:60,30:50,40:30,50:10,60:10,70:10},
-    5: {2:150,3:50,4:200,1:250,6:200,10:70,20:60,30:50,40:20,50:20,60:30,70:40},
-    6: {1:350,3:150,4:200,5:200,2:250,10:70,20:60,30:40,40:50,50:20,60:10,70:10},
+  ///Grafo de las ruta del real plaza
+  Map graph = {
+    1: {2:100,3:200,4:300,5:250,6:350,10:10,20:20,30:30,40:40,50:60},
+    2: {1:100,3:100,4:200,5:150,6:250,10:10,20:10,30:20,40:30,50:40},
+    3: {2:100,1:200,4:100,5:50,6:150,10:20,20:15,30:10,40:15,50:30},
+    4: {2:200,3:100,1:300,5:200,6:50,10:70,20:100,30:100,40:100,50:100},
+    5: {2:150,3:50,4:200,1:250,6:200,10:70,20:60,30:50,40:20,50:20},
+    6: {1:350,3:150,4:200,5:200,2:250,10:70,20:60,30:40,40:50,50:20,60:15,70:10},
   };
+
 
   var diccionario = {
     'A': 1,
@@ -54,6 +56,8 @@ class _EvacuationRouteScreenState extends State<EvacuationRouteScreen> {
     70: 'Salida7',
   };
 
+
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -61,90 +65,97 @@ class _EvacuationRouteScreenState extends State<EvacuationRouteScreen> {
     int inicio = 0;
     int salida = 0;
 
+    var caminos = [];
     var caminoOptimo = [];
-    int mejorCamino = 100;
-    for( var i = 1 ; i < 7  ; i++ ) {
+    num mejorCamino = 10000;
+    for( var i = 1 ; i < 8  ; i++ ) {
       inicio = int.parse(diccionario[widget.nodoSeleccionado].toString());
       salida = int.parse(diccionario["Salida"+i.toString()].toString());
       var caminoCorto = Dijkstra.findPathFromGraph(graph, inicio ,salida);
-      if(caminoCorto.length < mejorCamino){
-        caminoOptimo = caminoCorto;
-        mejorCamino = caminoCorto.length;
-      }
-      print(inicio);
-      print(salida);
-      print(caminoOptimo);
+      caminos.add(caminoCorto);
     }
-    print(caminoOptimo);
-    print(diccionarioReversa[1]);
+
+    for (List camino in caminos){
+      num tmp = 0;
+      for(int i=1; i<camino.length; i++){
+        tmp += graph[camino[i-1]][camino[i]];
+      }
+      if(mejorCamino > tmp){
+        mejorCamino = tmp;
+        caminoOptimo = camino;
+      }
+    }
 
     return Scaffold(
       body: SafeArea(
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Background(espec: "purple", height: double.infinity),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  SizedBox(
-                      height: 20
-                  ),
-                  Text(
-                    "Siga la ruta indicada ->",
-                    style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.white
+        child: SingleChildScrollView(
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Background(espec: "purple", height: screenHeight),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                        height: 20
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children:  [
-                          for( int i  in caminoOptimo) Flexible(
-                            child: FloatingActionButton(
-                              onPressed: (){
+                    const Text(
+                      "Siga la ruta indicada ->",
+                      style: TextStyle(
+                          fontSize: 25,
+                          color: Colors.white
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children:  [
+                            for( int i  in caminoOptimo) Padding(
+                              padding: const EdgeInsets.all(3),
+                              child: FloatingActionButton(
+                                onPressed: (){
 
-                              },
-                              tooltip: 'nodo',
-                              child: Text(
-                                diccionarioReversa[i].toString(),
-                                style: TextStyle(
-
+                                },
+                                tooltip: 'nodo',
+                                child: Text(
+                                  diccionarioReversa[i].toString(),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold
+                                  ),
                                 ),
+                                heroTag: null,
                               ),
-                              heroTag: null,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Container(
-                      height: screenHeight/1.4,
-                      width: screenWidth/1.1,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(
-                                "assets/images/nuevoMapa.png",
-                              ),
-                              fit: BoxFit.fill
-                          ),
-                          borderRadius: BorderRadius.circular(10)
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Container(
+                        height: screenHeight/1.4,
+                        width: screenWidth/1.1,
+                        decoration: BoxDecoration(
+                            image: const DecorationImage(
+                                image: AssetImage(
+                                  "assets/images/nuevoMapa.png",
+                                ),
+                                fit: BoxFit.fill
+                            ),
+                            borderRadius: BorderRadius.circular(10)
+                        ),
                       ),
                     ),
-                  ),
 
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
